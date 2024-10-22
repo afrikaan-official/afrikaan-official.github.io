@@ -54,7 +54,7 @@
                             if (!didHide) {
                                 options.onFallback();
                             }
-                        }, 1000);
+                        }, 2000);
                     }
                 }
 
@@ -88,7 +88,11 @@
                     }
                 }, dialogTimeout);
 
-                window.location = url;
+                try {
+                    window.location = url;
+                } catch (error) {
+                    console.log("DUSTU");
+                }
             };
 
             window.addEventListener('pagehide', preventPopup);
