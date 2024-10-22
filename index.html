@@ -10,8 +10,6 @@
         var appurl = 'alisgidis://prod.alisgidis.com/profile';
         var appstore = 'https://apps.apple.com/tr/app/al%C4%B1%C5%9Fgidi%C5%9F/id6504862902?l=tr';
         function preventPopup() {
-            clearTimeout(timeout);
-            timeout = null;
             window.removeEventListener('pagehide', preventPopup);
         }
 
