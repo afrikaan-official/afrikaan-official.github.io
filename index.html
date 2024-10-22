@@ -9,7 +9,10 @@
     <script type="text/javascript">
         var appurl = 'alisgidis://prod.alisgidis.com/profile';
         var appstore = 'https://apps.apple.com/tr/app/al%C4%B1%C5%9Fgidi%C5%9F/id6504862902?l=tr';
-
+        window.alert = function () {
+            try { console.log('alert prevented') } catch (e) { }
+        }
+        
         function DeepLinker(options) {
             if (!options) {
                 throw new Error('no options')
