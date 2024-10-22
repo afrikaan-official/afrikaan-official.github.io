@@ -7,12 +7,24 @@
 <body>
 
     <script type="text/javascript">
-        var now = new Date().valueOf();
-        setTimeout(function () {
-            if (new Date().valueOf() - now > 100) return;
-            window.location = "https://apps.apple.com/tr/app/al%C4%B1%C5%9Fgidi%C5%9F/id6504862902?l=tr";
-        }, 1000);
-        window.location = "alisgidis://prod.alisgidis.com/profile";
+        var appurl = 'alisgidis://prod.alisgidis.com/profile';
+        var appstore = 'https://apps.apple.com/tr/app/al%C4%B1%C5%9Fgidi%C5%9F/id6504862902?l=tr';
+
+        var timeout;
+        function preventPopup() {
+            clearTimeout(timeout);
+            timeout = null;
+            window.removeEventListener('pagehide', preventPopup);
+        }
+        function startApp() {
+            window.location = appurl;
+            timeout = setTimeout(function () {
+                if (confirm('You do not seem to have the App installed, do you want to go download it now?')) {
+                    document.location = appstore;
+                }
+            }, 1000);
+            window.addEventListener('pagehide', preventPopup);
+        }
     </script>
 </body>
 
