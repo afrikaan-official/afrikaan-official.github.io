@@ -56,6 +56,12 @@
                     options.onFallback();
                 }
             };
+
+            this.closeWindow = function () {
+                setTimeout(function () {
+                    window.close();
+                }, 1500);
+            };
         }
 
         var url = appurl;
@@ -64,16 +70,11 @@
                 window.location = appstore;
             },
             onReturn: function () {
-                console.log('Kullanıcı native uygulamadan geri döndü');
+                console.log('onReturn');
+                linker.closeWindow();
             }
         });
         linker.openURL(url);
     </script>
 </body>
 </html>
-
-
-
-
-
-
