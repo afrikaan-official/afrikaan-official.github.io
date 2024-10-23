@@ -9,31 +9,24 @@
     <script type="text/javascript">
         var appurl = 'alisgidis://prod.alisgidis.com/profile';
         var appstore = 'https://apps.apple.com/tr/app/al%C4%B1%C5%9Fgidi%C5%9F/id6504862902?l=tr';
-        var didFallback = false;
+        var fallbackTimer = null;
+        var didHide = false;
 
         function DeepLinker(options) {
             if (!options) {
                 throw new Error('no options');
             }
-            var didHide = false;
 
             function onVisibilityChange(e) {
                 if (e.target.visibilityState === 'hidden') {
+                    clearTimeout(fallbackTimer);
                     didHide = true;
                 }
             }
 
-            function onFocus() {
-                if (!didHide && options.onFallback && !didFallback) {
-                    options.onFallback();
-                }
-                didHide = false;
-            }
-
             function bindEvents(mode) {
                 [
-                    [document, 'visibilitychange', onVisibilityChange],
-                    [window, 'focus', onFocus]
+                    [document, 'visibilitychange', onVisibilityChange]
                 ].forEach(function (conf) {
                     conf[0][mode + 'EventListener'](conf[1], conf[2]);
                 });
@@ -42,9 +35,8 @@
             bindEvents('add');
 
             this.openURL = function (url) {
-                var fallbackTimer = setTimeout(function () {
+                fallbackTimer = setTimeout(function () {
                     if (!didHide) {
-                        didFallback = true;
                         options.onFallback();
                     }
                 }, 1500);
@@ -56,22 +48,12 @@
                     options.onFallback();
                 }
             };
-
-            this.closeWindow = function () {
-                setTimeout(function () {
-                    window.close();
-                }, 1500);
-            };
         }
 
         var url = appurl;
         var linker = new DeepLinker({
             onFallback: function () {
                 window.location = appstore;
-            },
-            onReturn: function () {
-                console.log('onReturn');
-                linker.closeWindow();
             }
         });
         linker.openURL(url);
