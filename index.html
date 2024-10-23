@@ -37,16 +37,19 @@
             this.openURL = function (url) {
                 fallbackTimer = setTimeout(function () {
                     if (!didHide) {
-                        options.onFallback();
+                        options.onFallback(); 
                     }
                 }, 1500);
 
-                try {
-                    window.location = url;
-                } catch (error) {
-                    clearTimeout(fallbackTimer);
-                    options.onFallback();
-                }
+                var a = document.createElement('a');
+                a.href = url;
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+
+                setTimeout(function () {
+                    document.body.removeChild(a);
+                }, 1000);
             };
         }
 
