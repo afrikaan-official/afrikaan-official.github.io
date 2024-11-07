@@ -1,13 +1,20 @@
 <html>
+
 <head>
     <title>Sayfa</title>
-    <meta name="apple-itunes-app" content="app-id=6504862902, app-argument=/profile">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <div id="content">
         Uygulama denemesi
     </div>
     <script type="text/javascript">
+        $(document).ready(function () {
+            $('head').append('<meta name="apple-itunes-app" content="app-id=6504862902, app-argument=/profile">');
+        });
+        
         var appurl = 'alisgidis://prod.alisgidis.com/profile';
         var appstore = 'https://apps.apple.com/tr/app/al%C4%B1%C5%9Fgidi%C5%9F/id6504862902?l=tr';
         var fallbackTimer = null;
@@ -15,4 +22,5 @@
 
     </script>
 </body>
+
 </html>
